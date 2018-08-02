@@ -36,16 +36,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="stof_doctrine_extensions.yaml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="stof_doctrine_extensions.yaml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="180">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Article.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Article.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Entity/Article.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="2865">
@@ -109,12 +109,12 @@
         <option value="$PROJECT_DIR$/src/Controller/ArticleController.php" />
         <option value="$PROJECT_DIR$/src/DataFixtures/ArticleFixtures.php" />
         <option value="$PROJECT_DIR$/src/DataFixtures/BaseFixture.php" />
-        <option value="$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml" />
         <option value="$PROJECT_DIR$/src/Migrations/Version20180802142647.php" />
         <option value="$PROJECT_DIR$/src/Migrations/Version20180802143405.php" />
         <option value="$PROJECT_DIR$/src/Migrations/Version20180802144119.php" />
         <option value="$PROJECT_DIR$/src/Migrations/Version20180802145350.php" />
         <option value="$PROJECT_DIR$/src/Entity/Article.php" />
+        <option value="$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml" />
       </list>
     </option>
   </component>
@@ -361,12 +361,12 @@
       <workItem from="1533060057847" duration="16987000" />
       <workItem from="1533094974626" duration="2751000" />
       <workItem from="1533105340746" duration="22595000" />
-      <workItem from="1533191209909" duration="22740000" />
+      <workItem from="1533191209909" duration="22994000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65073000" />
+    <option name="totallyTimeSpent" value="65327000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -755,13 +755,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Migrations/Version20180801140227.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -807,6 +800,13 @@
           <folding>
             <element signature="e#30#62#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/stof_doctrine_extensions.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
