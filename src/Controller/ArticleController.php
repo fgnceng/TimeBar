@@ -34,8 +34,12 @@ class ArticleController extends AbstractController
         $repository = $em->getRepository(Article::class);
         $articles = $repository->findAllPublishedOrderedByNewest();
 
+
         return $this->render('article/homepage.html.twig', [
             'articles' => $articles,
+
+
+
         ]);
     }
 
@@ -62,18 +66,15 @@ class ArticleController extends AbstractController
         return $this->render('article/show.html.twig', [
             'article' => $article,
             'comments' => $comments,
+
         ]);
     }
 
     /**
      * @Route("/news/{slug}/heart", name="article_toggle_heart", methods={"POST"})
      */
-    public function toggleArticleHeart($slug, LoggerInterface $logger)
+    public function toggleArticleHeart(Article $article, LoggerInterface $logger)
     {
-        // TODO - actually heart/unheart the article!
-
-        $logger->info('Article is being hearted!');
-
-        return new JsonResponse(['hearts' => rand(5, 100)]);
+       $article->incrementHaeartCount();
     }
 }
