@@ -53,6 +53,7 @@ class ArticleController extends AbstractController
             $slack->sendMessage('Kahn', 'Ah, Kirk, my old friend...');
         }
 
+
         if (!$article) {
             throw $this->createNotFoundException(sprintf('No article for slug "%s"', $article->getSlug()));
         }
@@ -65,7 +66,8 @@ class ArticleController extends AbstractController
 
         return $this->render('article/show.html.twig', [
             'article' => $article,
-            'comments' => $comments,
+
+
 
         ]);
     }

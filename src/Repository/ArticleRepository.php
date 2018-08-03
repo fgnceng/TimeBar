@@ -28,6 +28,7 @@ class ArticleRepository extends ServiceEntityRepository
      */
     public function findAllPublishedOrderedByNewest()
     {
+
         return $this->addIsPublishedQueryBuilder()
             ->orderBy('a.publishedAt', 'DESC')
             ->getQuery()
