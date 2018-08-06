@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Repository\ArticleRepository;
 use App\Service\MarkdownHelper;
 use App\Service\SlackClient;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,10 +30,11 @@ class ArticleController extends AbstractController
     /**
      * @Route("/", name="app_homepage")
      */
-    public function homepage(EntityManagerInterface $em)
+    public function homepage(ArticleRepository $repository)
     {
-        $repository = $em->getRepository(Article::class);
-        $articles = $repository->findAllPublishedOrderedByNewest();
+        //$repository = $em->getRepository(Article::class);
+
+        $articles = $repository->findAllPublishedOrderedByNewest();//Bütün article'ları articles dizisinde tutuyor.
 
 
         return $this->render('article/homepage.html.twig', [
@@ -73,10 +75,14 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/news/{slug}/heart", name="article_toggle_heart", methods={"POST"})
+     * @Route("/news/{slug}/heart", name="article_toggle_heart")
      */
+
     public function toggleArticleHeart(Article $article, LoggerInterface $logger)
     {
-       $article->incrementHaeartCount();
+
+       $article->incrementHeartCount();
+      return new JsonResponse(['hearts' => $article->getHeartCount()]);
+
     }
 }
