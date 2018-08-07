@@ -45,9 +45,14 @@
                 <div class="col-sm-12">
                     <img class="comment-img rounded-circle" src="{{ asset('images/astronaut-profile.png') }}">
                     <div class="comment-container d-inline-block pl-3 align-top">
-                        <span class="commenter-name">Amy Oort</span>
+                        <form >
+                            <input type="text" width="400">
+
+                        </form>
+                        <br>
+                        <br>
                         <div class="form-group">
-                            <textarea class="form-control comment-form" id="articleText" rows="1"></textarea>
+                            <textarea class="form-control comment-form" placeholder="Your comments.." id="articleText" rows="4"></textarea>
                         </div>
                         <button type="submit" class="btn btn-info">Comment</button>
                     </div>

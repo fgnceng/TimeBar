@@ -18,6 +18,7 @@ services:
             $markdownLogger: '@monolog.logger.markdown'
             $isDebug: '%kernel.debug%'
 
+
     # custom aliases for autowiring
     Nexy\Slack\Client: '@nexy_slack.client'
 

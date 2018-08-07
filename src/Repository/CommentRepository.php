@@ -66,7 +66,7 @@ class CommentRepository extends ServiceEntityRepository
     }
     */
 
-    /*
+
     public function findOneBySomeField($value): ?Comment
     {
         return $this->createQueryBuilder('c')
@@ -76,5 +76,5 @@ class CommentRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }

@@ -25,7 +25,9 @@ class ArticleController extends AbstractController
     public function __construct(bool $isDebug)
     {
         $this->isDebug = $isDebug;
+
     }
+
 
     /**
      * @Route("/", name="app_homepage")
@@ -35,13 +37,8 @@ class ArticleController extends AbstractController
         //$repository = $em->getRepository(Article::class);
 
         $articles = $repository->findAllPublishedOrderedByNewest();//Bütün article'ları articles dizisinde tutuyor.
-
-
         return $this->render('article/homepage.html.twig', [
             'articles' => $articles,
-
-
-
         ]);
     }
 
@@ -54,35 +51,28 @@ class ArticleController extends AbstractController
         if ($article->getSlug() == 'khaaaaaan') {
             $slack->sendMessage('Kahn', 'Ah, Kirk, my old friend...');
         }
-
-
         if (!$article) {
             throw $this->createNotFoundException(sprintf('No article for slug "%s"', $article->getSlug()));
         }
 
-        $comments = [
-            'I ate a normal rock once. It did NOT taste like bacon!',
-            'Woohoo! I\'m going on an all-asteroid diet!',
-            'I like bacon too! Buy some from my site! bakinsomebacon.com',
-        ];
-
         return $this->render('article/show.html.twig', [
             'article' => $article,
-
-
 
         ]);
     }
 
     /**
      * @Route("/news/{slug}/heart", name="article_toggle_heart")
+     *
      */
 
-    public function toggleArticleHeart(Article $article, LoggerInterface $logger)
+    public function toggleArticleHeart(Article $article, LoggerInterface $logger,EntityManagerInterface $entityManager)
     {
-
-       $article->incrementHeartCount();
-      return new JsonResponse(['hearts' => $article->getHeartCount()]);
+        $entityManager=$this->getDoctrine()->getManager();
+        $heartCount=$article->incrementHeartCount();
+        $entityManager->persist($heartCount);
+        $entityManager->flush();
+        return new JsonResponse(['hearts' => $article->getHeartCount()]);
 
     }
 }

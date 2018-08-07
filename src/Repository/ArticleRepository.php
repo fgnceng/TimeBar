@@ -50,5 +50,15 @@ class ArticleRepository extends ServiceEntityRepository
             ->andWhere('a.publishedAt is not null');
     }
 
+    public function findOneBySomeField($value): ?Comment
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 
 }

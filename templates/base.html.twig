@@ -28,9 +28,32 @@
                 <a style="color: #fff;" class="nav-link" href="#">Weather</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+        {# <form class="form-inline my-2 my-lg-0" method="post" action="{{ path('comment_admin') }}">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <input type="text"
+               name="q"
+               class="form-control"
+               value="{{ app.request.query.get('q') }}"
+               placeholder="Search..."
+        >
+        <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+        </form> #}
+
+        <form method="get" action="{{ path('comment_admin') }}">
+            <div class="input-group mb-3">
+                <input type="text"
+                       name="q"
+                       class="form-control"
+                       value="{{ app.request.query.get('q') }}"
+                       placeholder="Search..."
+                >
+                <div class="input-group-append">
+                    <button type="submit"
+                            class="btn btn-outline-secondary">
+                        <span class="fa fa-search"></span>
+                    </button>
+                </div>
+            </div>
         </form>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown" style="margin-right: 75px;">
