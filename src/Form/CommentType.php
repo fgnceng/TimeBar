@@ -1,7 +1,7 @@
 <?php
 namespace App\Form;
 
-use App\Entity\CommentUser;
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,22 +15,15 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextareaType::class, array(
-                'label' => 'Name:',
+            ->add('authorName',TextareaType::class, array(
+                'label' => 'Name and Surname:',
                 'attr' => array(
-                    'placeholder' => 'Enter your name...',
-
-                )
-            ))
-            ->add('surname', TextareaType::class,array(
-                'label'=>'Surname:',
-                'attr' => array(
-                    'placeholder' => 'Enter your surname...',
+                    'placeholder' => 'Enter your name and Surname...',
 
                 )
             ))
 
-            ->add('comment', TextareaType::class,array(
+            ->add('content', TextareaType::class,array(
                 'label'=>'Comment:',
                 'attr'=>array(
                     'placeholder'=>'Enter your comment',
@@ -49,7 +42,7 @@ class CommentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => CommentUser::class,
+            'data_class' => Comment::class,
         ]);
     }
 }

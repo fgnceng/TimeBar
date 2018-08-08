@@ -25,6 +25,11 @@ class Comment
     private $authorName;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $ipAdress;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $content;
@@ -89,6 +94,18 @@ class Comment
     public function setIsDeleted(bool $isDeleted): self
     {
         $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    public function getIpadress(): ?string
+    {
+        return $this->ipadress;
+    }
+
+    public function setIpadress(string $ipadress): self
+    {
+        $this->ipadress = $ipadress;
 
         return $this;
     }

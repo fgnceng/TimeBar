@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\Entity\CommentUser;
+use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use App\Service\MarkdownHelper;
@@ -59,17 +59,17 @@ class ArticleController extends AbstractController
             throw $this->createNotFoundException(sprintf('No article for slug "%s"', $article->getSlug()));
         }
 
-        $commentuser = new CommentUser();
-        $commentForm = $this->createForm(CommentType::class, $commentuser);
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
 
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            $commentuser = $commentForm->getData();
+            $comment = $commentForm->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($commentuser);
+
+            $entityManager->persist($comment);
+
             $entityManager->flush();
-            $this->addFlash('succes', 'Comment created Succesfully');
-
             return $this->render('article/show.html.twig', array(
                 'commentForm' => $commentForm->createView(),
                 'article'=>$article,
@@ -77,6 +77,7 @@ class ArticleController extends AbstractController
             ));
 
         }
+         $comment= $this->getDoctrine()->getRepository(Comment::class)->findAll();
 
             return $this->render('article/show.html.twig', array(
                 'commentForm' => $commentForm->createView(),
@@ -86,10 +87,6 @@ class ArticleController extends AbstractController
         }
 
 
-       public function showComment() {
-        $article = $this->getDoctrine()->getRepository(CommentUser::class)->findAll();
-        return $this->render('articles/show.html.twig', array('commentuser' => $commentuser));
-    }
 
 
     /**
