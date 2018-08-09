@@ -71,6 +71,11 @@ class Article
      */
     private $tags;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="article")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -176,7 +181,7 @@ class Article
 
     public function getImagePath()
     {
-        return 'images/'.$this->getImageFilename();
+        return 'images/' . $this->getImageFilename();
     }
 
     /**
@@ -194,8 +199,7 @@ class Article
     {
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('isDeleted', false))
-             ->orderBy(['createdAt'=>'DESC'])
-            ;
+            ->orderBy(['createdAt' => 'DESC']);
         return $this->comments->matching($criteria);
 
     }
@@ -245,6 +249,18 @@ class Article
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

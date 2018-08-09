@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form;
 
 use App\Entity\Comment;
@@ -15,28 +16,22 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('authorName',TextareaType::class, array(
+            ->add('authorName', TextareaType::class, array(
                 'label' => 'Name and Surname:',
                 'attr' => array(
                     'placeholder' => 'Enter your name and Surname...',
 
                 )
             ))
-
-            ->add('content', TextareaType::class,array(
-                'label'=>'Comment:',
-                'attr'=>array(
-                    'placeholder'=>'Enter your comment',
+            ->add('content', TextareaType::class, array(
+                'label' => 'Comment:',
+                'attr' => array(
+                    'placeholder' => 'Enter your comment',
                 )
             ))
-
-            ->add('saveComment',SubmitType::class,['label'=>' Add Comment',
-            'attr'=>array(
-
-            )
-            ])
-
-        ;
+            ->add('saveComment', SubmitType::class, ['label' => ' Add Comment',
+                'attr' => array()
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

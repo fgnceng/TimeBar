@@ -19,24 +19,36 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('username', TextType::class)
+            ->add('email', EmailType::class, array(
+                'attr' => array(
+                    'placeholder' => 'Enter your email',
+
+                )
+            ))
+            ->add('username', TextType::class, array(
+                'attr' => array(
+                    'placeholder' => 'Enter your username',
+                )
+            ))
             ->add('plainPassword', RepeatedType::class, array(
+                'attr' => array(
+                    'placeholder' => 'Enter your Password'),
+
                 'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
+                'first_options' => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
             ))
-            ->add('bulletin' , CheckboxType::class , array(
-                'label'=>'Do you want to sign up for e newsletter?',
-                    'required'=>false,
+            ->add('bulletin', CheckboxType::class, array(
+                    'label' => 'Do you want to sign up for e newsletter?',
+                    'required' => false,
                 )
-            )
-        ;
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

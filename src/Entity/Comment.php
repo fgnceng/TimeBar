@@ -50,7 +50,7 @@ class Comment
      */
     public function __construct()
     {
-        if (! $this->createdAt instanceof \DateTime ) {
+        if (!$this->createdAt instanceof \DateTime) {
             $this->createdAt = new \DateTime();
         }
     }

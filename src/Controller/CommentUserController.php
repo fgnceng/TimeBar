@@ -39,7 +39,7 @@ class CommentUserController extends Controller
             $entityManager->persist($commentuser);
             $entityManager->flush();
 
-           return $this->redirectToRoute('article_show');
+            return $this->redirectToRoute('article_show');
 
         }
 

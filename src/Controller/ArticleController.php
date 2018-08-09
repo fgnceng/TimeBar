@@ -74,21 +74,19 @@ class ArticleController extends AbstractController
             $entityManager->flush();
             return $this->render('article/show.html.twig', array(
                 'commentForm' => $commentForm->createView(),
-                'article'=>$article,
+                'article' => $article,
 
             ));
 
         }
-         $comment= $this->getDoctrine()->getRepository(Comment::class)->findAll();
+        $comment = $this->getDoctrine()->getRepository(Comment::class)->findAll();
 
-            return $this->render('article/show.html.twig', array(
-                'commentForm' => $commentForm->createView(),
-                'article'=>$article,
+        return $this->render('article/show.html.twig', array(
+            'commentForm' => $commentForm->createView(),
+            'article' => $article,
 
-            ));
-        }
-
-
+        ));
+    }
 
 
     /**

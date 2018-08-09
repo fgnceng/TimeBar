@@ -25,8 +25,7 @@ class CommentRepository extends ServiceEntityRepository
     {
         return Criteria::create()
             ->andWhere(Criteria::expr()->eq('isDeleted', false))
-            ->orderBy(['createdAt' => 'DESC'])
-            ;
+            ->orderBy(['createdAt' => 'DESC']);
     }
 
     /**
@@ -40,13 +39,11 @@ class CommentRepository extends ServiceEntityRepository
 
         if ($term) {
             $qb->andWhere('c.content LIKE :term OR c.authorName LIKE :term OR a.title LIKE :term')
-                ->setParameter('term', '%' . $term . '%')
-            ;
+                ->setParameter('term', '%' . $term . '%');
         }
 
         return $qb
-            ->orderBy('c.createdAt', 'DESC')
-            ;
+            ->orderBy('c.createdAt', 'DESC');
     }
 
 //    /**
@@ -73,8 +70,7 @@ class CommentRepository extends ServiceEntityRepository
             ->andWhere('c.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,14 +12,19 @@ class SecurityController extends Controller
     /**
      * @Route("/login", name="login")
      */
-    public function login( AuthenticationUtils $utils,Request $request)
+    public function login(AuthenticationUtils $utils, Request $request)
     {
-        $error=$utils->getLastAuthenticationError();
-        $lastUsername=$utils->getLastUsername();
+        $error = $utils->getLastAuthenticationError();
+        $lastUsername = $utils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
-           'last_Username'=>$lastUsername,
-            'error'=>$error,
+            'last_Username' => $lastUsername,
+            'error' => $error,
         ]);
+    }
+
+    public function logout(): void
+    {
+        throw new \Exception('This should never be reached!');
     }
 }
