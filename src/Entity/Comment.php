@@ -27,7 +27,7 @@ class Comment
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $ipAdress;
+    private $ipadress;
 
     /**
      * @ORM\Column(type="text")
@@ -44,6 +44,17 @@ class Comment
      * @ORM\Column(type="boolean")
      */
     private $isDeleted;
+
+    /**
+     * Comment constructor.
+     */
+    public function __construct()
+    {
+        if (! $this->createdAt instanceof \DateTime ) {
+            $this->createdAt = new \DateTime();
+        }
+    }
+
 
     public function getId()
     {

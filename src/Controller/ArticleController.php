@@ -64,7 +64,9 @@ class ArticleController extends AbstractController
 
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            $comment = $commentForm->getData();
+            $comment->setIpadress($request->getClientIp());
+            $comment->setIsDeleted(false);
+            $comment->setArticle($article);
             $entityManager = $this->getDoctrine()->getManager();
 
             $entityManager->persist($comment);
