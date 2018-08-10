@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Form\ArticleType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use App\Service\MarkdownHelper;
@@ -17,6 +20,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
+use App\Utils\Slugger;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 class ArticleController extends AbstractController
 {
@@ -102,6 +109,43 @@ class ArticleController extends AbstractController
         $entityManager->flush();
         return new JsonResponse(['hearts' => $article->getHeartCount()]);
 
+    }
+
+
+    /**
+     * @Route("/user/article/new", name="user_article_new")
+     */
+
+    public function new(Request $request): Response
+    {
+        $article = new Article();
+       $article->setAuthor(($this->getUser()));
+        $form = $this->createForm(ArticleType::class, $article)
+            ->add('saveAndCreateNew', SubmitType::class);
+
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article->setSlug(Slugger::slugify($article->getTitle()));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            dump($article); die;
+            $em->flush();
+
+
+            if ($form->get('saveAndCreateNew')->isClicked()) {
+                return $this->redirectToRoute('app_homepage');
+            }
+
+            return $this->redirectToRoute('app_homepage');
+        }
+
+        return $this->render('article/new_article.html.twig', [
+            'post' => $article,
+            'form' => $form->createView(),
+        ]);
     }
 
 

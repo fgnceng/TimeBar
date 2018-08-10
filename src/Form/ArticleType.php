@@ -1,23 +1,18 @@
 <?php
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace App\Form;
 
-use App\Entity\Post;
-use App\Form\Type\DateTimePickerType;
+use App\Entity\Article;
 use App\Form\Type\TagsInputType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use App\Form\Type\DateTimePickerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
 
 
 class ArticleType extends AbstractType
@@ -39,23 +34,20 @@ class ArticleType extends AbstractType
         $builder
             ->add('title', null, [
                 'attr' => ['autofocus' => true],
-                'label' => 'label.title',
+                'label' => 'Title',
             ])
-            ->add('summary', TextareaType::class, [
-                'help' => 'Summaries can\'t contain Markdown or HTML contents; only plain text.',
-                'label' => 'label.summary',
-            ])
+
             ->add('content', null, [
-                'attr' => ['rows' => 20],
-                'help' => 'Use Markdown to format the blog post contents. HTML is allowed too.',
-                'label' => 'label.content',
+                'attr' => ['rows' => 10],
+                'help' => 'Yours article content...',
+                'label' => 'Article Content',
             ])
             ->add('publishedAt', DateTimePickerType::class, [
-                'label' => 'label.published_at',
-                'help' => 'Set the date in the future to schedule the blog post publication.',
+                'label' => 'Publish Date',
+                'help' => 'Set the date in the future to schedule the blog article publication.',
             ])
             ->add('tags', TagsInputType::class, [
-                'label' => 'label.tags',
+                'label' => ' Article Tag',
                 'required' => false,
             ])
         ;
@@ -67,7 +59,7 @@ class ArticleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Post::class,
+            'data_class' => Article::class,
         ]);
     }
 }

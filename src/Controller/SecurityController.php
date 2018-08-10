@@ -16,13 +16,15 @@ class SecurityController extends Controller
     {
         $error = $utils->getLastAuthenticationError();
         $lastUsername = $utils->getLastUsername();
-
         return $this->render('security/login.html.twig', [
             'last_Username' => $lastUsername,
             'error' => $error,
         ]);
     }
 
+/**
+ * @Route("/logout", name="logout")
+ */
     public function logout(): void
     {
         throw new \Exception('This should never be reached!');

@@ -32,7 +32,7 @@
                      <br>
 
                      {% if error %}
-                         <div>Hello</div>
+
                          <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                      {% endif %}
 
@@ -49,7 +49,7 @@
                              <input type="hidden" name="_target_path" value="/account" />
                          #}
 
-                         <button type="submit">login</button>
+                         <button type="submit">Login</button>
                      </form>
 
                  </div>
