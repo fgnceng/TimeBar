@@ -19,6 +19,7 @@ services:
             $isDebug: '%kernel.debug%'
 
 
+
     # custom aliases for autowiring
     Nexy\Slack\Client: '@nexy_slack.client'
 

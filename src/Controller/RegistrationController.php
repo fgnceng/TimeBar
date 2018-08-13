@@ -32,6 +32,7 @@ class RegistrationController extends Controller
             // 4) save the User!
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+
             $entityManager->flush();
 
             // ... do any other work - like sending them an email, etc

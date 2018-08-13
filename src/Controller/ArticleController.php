@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Entity\Tag;
 use App\Form\ArticleType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -37,7 +38,6 @@ class ArticleController extends AbstractController
         $this->isDebug = $isDebug;
 
     }
-
 
     /**
      * @Route("/", name="app_homepage")
@@ -75,7 +75,6 @@ class ArticleController extends AbstractController
             $comment->setIsDeleted(false);
             $comment->setArticle($article);
             $entityManager = $this->getDoctrine()->getManager();
-
             $entityManager->persist($comment);
 
             $entityManager->flush();
@@ -119,10 +118,13 @@ class ArticleController extends AbstractController
     public function new(Request $request): Response
     {
         $article = new Article();
-       $article->setAuthor(($this->getUser()));
+        $user = $this->getUser();
+
+        $article->setAuthor($user->getUsername());
+        $article->setImageFilename("/");
+
         $form = $this->createForm(ArticleType::class, $article)
             ->add('saveAndCreateNew', SubmitType::class);
-
 
         $form->handleRequest($request);
 
@@ -131,22 +133,20 @@ class ArticleController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
-            dump($article); die;
             $em->flush();
 
 
             if ($form->get('saveAndCreateNew')->isClicked()) {
-                return $this->redirectToRoute('app_homepage');
+                return $this->redirectToRoute('user_article_new');
             }
 
             return $this->redirectToRoute('app_homepage');
         }
 
         return $this->render('article/new_article.html.twig', [
-            'post' => $article,
+            'article' => $article,
             'form' => $form->createView(),
         ]);
     }
-
 
 }
