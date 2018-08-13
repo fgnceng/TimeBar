@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Comment;
 use App\Entity\Tag;
 use App\Form\ArticleType;
+use function Sodium\crypto_auth;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Form\CommentType;
@@ -20,10 +21,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Twig\Environment;
 use App\Utils\Slugger;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\DataFixtures\ArticleFixtures;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 class ArticleController extends AbstractController
@@ -118,10 +118,15 @@ class ArticleController extends AbstractController
     public function new(Request $request): Response
     {
         $article = new Article();
+
         $user = $this->getUser();
 
+        if (is_null($user)) {
+            throw $this->createAccessDeniedException('Access Denied.');
+        }
+
         $article->setAuthor($user->getUsername());
-        $article->setImageFilename("/");
+        $article->setImageFilename("images/alien-profile.png");
 
         $form = $this->createForm(ArticleType::class, $article)
             ->add('saveAndCreateNew', SubmitType::class);
