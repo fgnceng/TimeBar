@@ -6,7 +6,8 @@ use App\Entity\Article;
 use App\Entity\Comment;
 use App\Entity\Tag;
 use App\Form\ArticleType;
-use function Sodium\crypto_auth;
+//use function Sodium\crypto_auth;
+use Faker\Provider\Image;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Form\CommentType;
@@ -118,39 +119,51 @@ class ArticleController extends AbstractController
     public function new(Request $request): Response
     {
         $article = new Article();
-
         $user = $this->getUser();
-
         if (is_null($user)) {
             throw $this->createAccessDeniedException('Access Denied.');
         }
-
         $article->setAuthor($user->getUsername());
-        $article->setImageFilename("images/alien-profile.png");
+
 
         $form = $this->createForm(ArticleType::class, $article)
             ->add('saveAndCreateNew', SubmitType::class);
 
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $article->setSlug(Slugger::slugify($article->getTitle()));
+           // $image=$article->getImageFile();
+            ////$article->setImageFilename($image);
+            /**
+             * var UploadFile $file;
+             */
+            $file=$article->getImageFile();
+             $fileName=md5(uniqid()).'.'.$file->guessExtension();
+             $article->setImageFilename($fileName);
+             $article->getImageFilename();
+
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
-            $em->flush();
 
+            $em->flush();
+            $this->addFlash( 'succes','Your article created successfully');
 
             if ($form->get('saveAndCreateNew')->isClicked()) {
-                return $this->redirectToRoute('user_article_new');
+
+                return $this->redirectToRoute('app_homepage');
+
             }
 
-            return $this->redirectToRoute('app_homepage');
+            return $this->redirectToRoute('user_article_new');
         }
 
         return $this->render('article/new_article.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
+
         ]);
     }
 

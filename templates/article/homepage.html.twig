@@ -21,7 +21,13 @@
 
                 <!-- Supporting Articles -->
 
+
                 {% for article in articles %}
+                    {% for message in app.flashes('succes') %}
+                            <div class="alert alert-success">
+                                <strong>{{ message }}</strong>
+                        </div>
+                    {% endfor %}
                     <div class="article-container my-1">
                         <a href="{{ path('article_show', {slug: article.slug}) }}">
                             <img class="article-img" src="{{ asset(article.imagePath) }}">

@@ -21,6 +21,8 @@ class SecurityController extends Controller
             'last_Username' => $lastUsername,
             'error' => $error,
         ]);
+
+        $this->redirectToRoute('app_homepage');
     }
 
 /**
