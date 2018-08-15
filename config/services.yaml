@@ -3,6 +3,7 @@
 parameters:
     cache_adapter: cache.adapter.apcu
     locale: 'en'
+    images_directory: '%kernel.project_dir%/public/images'
 
 
 services:

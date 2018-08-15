@@ -23,9 +23,18 @@
 
 
                 {% for article in articles %}
-                    {% for message in app.flashes('succes') %}
-                            <div class="alert alert-success">
+                    <div>
+                        {% for message in app.flashes('notice') %}
+                            <div class="alert alert-warning">
+                                <strong>Warning!</strong>
                                 <strong>{{ message }}</strong>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% for message in app.flashes('succes') %}
+                        <div class="alert alert-success">
+                            <strong>Success!</strong>
+                            <strong>{{ message }}</strong>
                         </div>
                     {% endfor %}
                     <div class="article-container my-1">

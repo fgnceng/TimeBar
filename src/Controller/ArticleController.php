@@ -121,11 +121,13 @@ class ArticleController extends AbstractController
         $article = new Article();
         $user = $this->getUser();
         if (is_null($user)) {
-            throw $this->createAccessDeniedException('Access Denied.');
+            // throw $this->createAccessDeniedException('Access Denied.');
+            $this->addFlash('notice', 'To create an article, you must first log in.');
+            return $this->redirectToRoute('app_homepage');
+
         }
+
         $article->setAuthor($user->getUsername());
-
-
         $form = $this->createForm(ArticleType::class, $article)
             ->add('saveAndCreateNew', SubmitType::class);
 
@@ -133,23 +135,22 @@ class ArticleController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $article->setSlug(Slugger::slugify($article->getTitle()));
-           // $image=$article->getImageFile();
-            ////$article->setImageFilename($image);
+
             /**
              * var UploadFile $file;
              */
-            $file=$article->getImageFile();
-             $fileName=md5(uniqid()).'.'.$file->guessExtension();
-             $article->setImageFilename($fileName);
-             $article->getImageFilename();
-
-
+            $file = $article->getImageFile();
+            $imageFilename = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move(
+                $this->getParameter('images_directory'), $imageFilename
+            );
+            $article->setImageFilename($imageFilename);
+            $article->setSlug(Slugger::slugify($article->getTitle()));
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
 
             $em->flush();
-            $this->addFlash( 'succes','Your article created successfully');
+            $this->addFlash('succes', 'Your article created successfully.');
 
             if ($form->get('saveAndCreateNew')->isClicked()) {
 

@@ -62,17 +62,9 @@ class TagArrayToStringTransformer implements DataTransformerInterface
             'name' => $names,
         ]);
 
-
-        $newNames = array_diff($names, $tags);
-
-        foreach ($newNames as $name) {
-            $tag = new Tag();
-            $tag->setName($name);
-            $tags[] = $tag;
-
             // There's no need to persist these new tags because Doctrine does that automatically
             // thanks to the cascade={"persist"} option in the App\Entity\Post::$tags property.
-        }
+
 
         // Return an array of tags to transform them back into a Doctrine Collection.
         // See Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer::reverseTransform()

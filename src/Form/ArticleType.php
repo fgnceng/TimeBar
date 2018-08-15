@@ -3,6 +3,7 @@
 
 namespace App\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\File;
 use App\Entity\Article;
 use App\Form\Type\TagsInputType;
@@ -43,7 +44,9 @@ class ArticleType extends AbstractType
                 'help' => 'Yours article content...',
                 'label' => 'Article Content',
             ])
-            ->add('imageFile', FileType::class, array('label'=>"insert image"))
+            ->add('imageFile', FileType::class, array(
+                'label'=>"Insert Image",
+            ))
 
             ->add('publishedAt', DateTimePickerType::class, [
                 'label' => 'Publish Date',
