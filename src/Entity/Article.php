@@ -51,7 +51,10 @@ class Article
     private $publishedAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $author;
 
@@ -148,16 +151,15 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?string
+
+    public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(string $author): self
+    public function setAuthor(?User $author): void
     {
         $this->author = $author;
-
-        return $this;
     }
 
     public function getHeartCount(): ?int

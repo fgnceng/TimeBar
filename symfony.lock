@@ -95,6 +95,9 @@
             "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
         }
     },
+    "egulias/email-validator": {
+        "version": "2.1.4"
+    },
     "fzaninotto/faker": {
         "version": "v1.8.0"
     },
@@ -244,6 +247,9 @@
             "version": "1.2",
             "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
         }
+    },
+    "swiftmailer/swiftmailer": {
+        "version": "v6.1.2"
     },
     "symfony/asset": {
         "version": "v4.1.2"
@@ -400,6 +406,15 @@
     },
     "symfony/stopwatch": {
         "version": "v4.1.2"
+    },
+    "symfony/swiftmailer-bundle": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "3db029c03e452b4a23f7fc45cec7c922c2247eb8"
+        }
     },
     "symfony/templating": {
         "version": "v4.1.2"

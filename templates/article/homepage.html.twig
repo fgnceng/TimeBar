@@ -27,7 +27,7 @@
                         {% for message in app.flashes('notice') %}
                             <div class="alert alert-warning">
                                 <strong>Warning!</strong>
-                                <strong>{{ message }}</strong>
+                                {{ message }}
                             </div>
                         {% endfor %}
                     </div>
@@ -53,7 +53,7 @@
                                 {% endfor %}
                                 <br>
                                 <span class="align-left article-details"><img class="article-author-img rounded-circle"
-                                                                              src="{{ asset('images/alien-profile.png') }}"> {{ article.author }} </span>
+                                                                              src="{{ asset('images/alien-profile.png') }}"> {{ article.author.username }} </span>
                                 <span class="pl-5 article-details float-right"> {{ article.publishedAt ? article.publishedAt|ago }}</span>
                             </div>
                         </a>

@@ -46,6 +46,7 @@ class ArticleType extends AbstractType
             ])
             ->add('imageFile', FileType::class, array(
                 'label'=>"Insert Image",
+
             ))
 
             ->add('publishedAt', DateTimePickerType::class, [

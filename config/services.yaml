@@ -4,6 +4,7 @@ parameters:
     cache_adapter: cache.adapter.apcu
     locale: 'en'
     images_directory: '%kernel.project_dir%/public/images'
+    app.notifications.email_sender: anonymous@example.com
 
 
 services:
@@ -19,8 +20,8 @@ services:
         bind:
             $markdownLogger: '@monolog.logger.markdown'
             $isDebug: '%kernel.debug%'
-
-
+          #$emailSender: '%app.notifications.email_sender%'
+           
 
     # custom aliases for autowiring
     Nexy\Slack\Client: '@nexy_slack.client'
@@ -37,5 +38,14 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\EventSubscriber\ArticleNotificationSubscriber:
+            $sender: '%app.notifications.email_sender%'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+
+sensio_framework_extra:
+    request:
+        converters: true
+        auto_convert: false

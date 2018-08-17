@@ -5,10 +5,8 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Comment;
 use App\Entity\Tag;
+use App\Events;
 use App\Form\ArticleType;
-//use function Sodium\crypto_auth;
-use Faker\Provider\Image;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
@@ -25,7 +23,9 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Utils\Slugger;
 use App\DataFixtures\ArticleFixtures;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 class ArticleController extends AbstractController
 {
@@ -34,9 +34,11 @@ class ArticleController extends AbstractController
      */
     private $isDebug;
 
+
     public function __construct(bool $isDebug)
     {
         $this->isDebug = $isDebug;
+
 
     }
 
@@ -116,26 +118,24 @@ class ArticleController extends AbstractController
      * @Route("/user/article/new", name="user_article_new")
      */
 
-    public function new(Request $request): Response
+    public function new(Request $request, EventDispatcherInterface $eventDispatcher): Response
     {
         $article = new Article();
         $user = $this->getUser();
+        $article->setAuthor($user);
+
         if (is_null($user)) {
             // throw $this->createAccessDeniedException('Access Denied.');
             $this->addFlash('notice', 'To create an article, you must first log in.');
             return $this->redirectToRoute('app_homepage');
-
         }
 
-        $article->setAuthor($user->getUsername());
+
         $form = $this->createForm(ArticleType::class, $article)
             ->add('saveAndCreateNew', SubmitType::class);
-
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-
             /**
              * var UploadFile $file;
              */
@@ -146,16 +146,18 @@ class ArticleController extends AbstractController
             );
             $article->setImageFilename($imageFilename);
             $article->setSlug(Slugger::slugify($article->getTitle()));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
-
             $em->flush();
+
             $this->addFlash('succes', 'Your article created successfully.');
 
+            $event = new GenericEvent($article); // yeni bir event oluşturduk bizim article mızın oluşturulmasına göre tetiklenerek çalışmaya başlayacak.
+            $eventDispatcher->dispatch(Events::ARTICLE_CREATED, $event);
+
             if ($form->get('saveAndCreateNew')->isClicked()) {
-
                 return $this->redirectToRoute('app_homepage');
-
             }
 
             return $this->redirectToRoute('user_article_new');
@@ -163,8 +165,8 @@ class ArticleController extends AbstractController
 
         return $this->render('article/new_article.html.twig', [
             'article' => $article,
+            'user' => $user,
             'form' => $form->createView(),
-
         ]);
     }
 

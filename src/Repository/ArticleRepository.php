@@ -31,6 +31,7 @@ class ArticleRepository extends ServiceEntityRepository
 
         return $this->addIsPublishedQueryBuilder()
             ->leftJoin('a.tags','t')
+            ->innerJoin('a.author', 'u')
             ->addSelect('t')
             ->orderBy('a.publishedAt', 'DESC')
             ->getQuery()
@@ -48,16 +49,6 @@ class ArticleRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQueryBuilder($qb)
             ->andWhere('a.publishedAt is not null');
-    }
-
-    public function findOneBySomeField($value): ?Comment
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-            ;
     }
 
 
