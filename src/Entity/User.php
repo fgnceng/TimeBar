@@ -56,10 +56,29 @@ class User implements UserInterface,\Serializable
      */
     private $article;
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $roles ;
+
+    public function getRoles()
+    {
+        return $this->roles;
+
+    }
+
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
     public function __construct()
     {
         $this->article = new ArrayCollection();
     }
+
+
 
     public function getId()
     {
@@ -123,13 +142,6 @@ class User implements UserInterface,\Serializable
 
         return $this;
     }
-
-
-      public function getRoles()
-      {
-          return array('ROLE_USER');
-      }
-
 
 
     /**

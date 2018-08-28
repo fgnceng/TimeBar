@@ -42,6 +42,8 @@ class ArticleController extends AbstractController
 
     }
 
+
+
     /**
      * @Route("/", name="app_homepage")
      */

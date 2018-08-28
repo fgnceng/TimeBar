@@ -31,7 +31,7 @@ class ArticleRepository extends ServiceEntityRepository
 
         return $this->addIsPublishedQueryBuilder()
             ->leftJoin('a.tags','t')
-            ->innerJoin('a.author', 'u')
+            ->innerJoin('a.author', 'u') //alias olarak user tablo adı için u harfi kullanıldı.
             ->addSelect('t')
             ->orderBy('a.publishedAt', 'DESC')
             ->getQuery()

@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UserType extends AbstractType
 {
@@ -47,7 +48,19 @@ class UserType extends AbstractType
             ->add('bulletin', CheckboxType::class, array(
                     'label' => 'Do you want to sign up for e newsletter?',
                     'required' => false,
-                )
+                ))
+
+            ->add('roles', ChoiceType::class, array(
+                'attr' => array(
+                    'required' => false,
+                ),
+                'multiple' => true,
+                'expanded' => true, // render check-boxes
+                'choices' => [
+                    'admin' => 'ROLE_ADMIN',
+                    'user' => 'ROLE_USER',
+                ]
+            )
             );
     }
 

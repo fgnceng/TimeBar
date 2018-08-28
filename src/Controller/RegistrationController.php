@@ -18,6 +18,7 @@ class RegistrationController extends Controller
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         // 1) build the form
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
@@ -32,7 +33,6 @@ class RegistrationController extends Controller
             // 4) save the User!
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
-
             $entityManager->flush();
 
             // ... do any other work - like sending them an email, etc
@@ -45,5 +45,15 @@ class RegistrationController extends Controller
             'registration/register.html.twig',
             array('form' => $form->createView())
         );
+
+
+    }
+
+    /**
+     * @Route("/admin")
+     */
+    public function admin()
+    {
+        return new Response('<html><body>Admin page!</body></html>');
     }
 }

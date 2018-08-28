@@ -20,8 +20,8 @@ class CommentAdminController extends Controller
         $queryBuilder = $repository->getWithSearchQueryBuilder($q);
 
         $pagination = $paginator->paginate(
-            $queryBuilder, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
+            $queryBuilder,
+            $request->query->getInt('page', 1),
             10/*limit per page*/
         );
 
