@@ -2,7 +2,7 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %} Do you Wan to Register?{% endblock %}
+{% block title %} Do you Want to Register?{% endblock %}
  {% block body %}
 <div class="container">
     <div class="row">
@@ -16,6 +16,7 @@
             {{ form_row(form.plainPassword.first) }}
             {{ form_row(form.plainPassword.second) }}
             {{ form_row(form.bulletin) }}
+             {{ form_row(form.roles) }}
             <button type="submit">Register!</button>
             {{ form_end(form) }}
         </div>
