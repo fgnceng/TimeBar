@@ -1,34 +1,52 @@
 <?php
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * This custom Doctrine repository is empty because so far we don't need any custom
- * method to query for application user information. But it's always a good practice
- * to define a custom repository that will be used when the application grows.
- *
- * See https://symfony.com/doc/current/doctrine/repository.html
- *
- * @author Ryan Weaver <weaverryan@gmail.com>
- * @author Javier Eguiluz <javier.eguiluz@gmail.com>
+ * UserRepository.
  */
 class UserRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, User::class);
+    }
+
+    public function getByValidToken($token)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb->where('u.resetPasswordToken = :token');
+        $qb->setParameter(':token', $token);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param $providerId
+     *
+     * @return mixed
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getByProviderId($providerId)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb
+            ->where('u.providerId = :providerId')
+            ->setParameter(':providerId', $providerId);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function countUsers()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

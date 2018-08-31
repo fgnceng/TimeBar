@@ -1,5 +1,4 @@
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+
 parameters:
     cache_adapter: cache.adapter.apcu
     locale: 'en'
@@ -41,8 +40,10 @@ services:
     App\EventSubscriber\ArticleNotificationSubscriber:
             $sender: '%app.notifications.email_sender%'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\EventListener\PasswordTokenReset:
+           tags:
+             - { name: kernel.event_listener, event: token.reseted, method: resetToken }
+
 
 
 sensio_framework_extra:

@@ -52,6 +52,12 @@ class User implements UserInterface,\Serializable
     private $bulletin;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(name="token_expiration_date", type="datetime", nullable=true)
+     */
+     private $tokenExpirationDate;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="user")
      */
     private $article;
@@ -60,6 +66,17 @@ class User implements UserInterface,\Serializable
      * @ORM\Column(type="array")
      */
     private $roles ;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+
+    /**
+     * @var string
+     * @ORM\Column(name="reset_password_token", type="string", unique=true, nullable=true, length=100)
+     */
+    private $resetPasswordToken;
+
 
     public function getRoles()
     {
@@ -143,6 +160,37 @@ class User implements UserInterface,\Serializable
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getResetPasswordToken(): ?string
+    {
+        return $this->resetPasswordToken;
+    }
+
+    /**
+     * @param string $resetPasswordToken
+     */
+    public function setResetPasswordToken(?string $resetPasswordToken = null)
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTokenExpirationDate(): \DateTime
+    {
+        return $this->tokenExpirationDate;
+    }
+
+    public function setTokenExpirationDate(): void
+    {
+        $date = new \DateTime();
+        $date->add(new \DateInterval('PT1H'));
+        $this->tokenExpirationDate = $date;
+    }
+
 
     /**
      * Returns the salt that was originally used to encode the password.
@@ -222,4 +270,26 @@ class User implements UserInterface,\Serializable
             // $this->salt
             ) = unserialize($serialized, array('allowed_classes' => false));
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
