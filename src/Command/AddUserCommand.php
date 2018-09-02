@@ -129,7 +129,6 @@ class AddUserCommand extends Command
     {
 
         $existingUser = $this->users->findOneBy(['username' => $username]);
-
         if ($existingUser !== null) {
             throw new RuntimeException(sprintf('There is already a user registered with the "%s" username.', $username));
         }
@@ -137,8 +136,8 @@ class AddUserCommand extends Command
 
         $this->validator->validatePassword($plainPassword);
         $this->validator->validateEmail($email);
-        $existingEmail = $this->users->findOneBy(['email' => $email]);
 
+        $existingEmail = $this->users->findOneBy(['email' => $email]);
         if ($existingEmail !== null) {
             throw new RuntimeException(sprintf('There is already a user registered with the "%s" email.', $email));
         }
