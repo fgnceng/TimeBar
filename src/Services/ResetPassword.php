@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
-use App\Entity\User;
 
 class ResetPassword
 {
@@ -12,19 +11,16 @@ class ResetPassword
      * @var EntityManagerInterface
      */
     private $em;
-
     /**
      * @var \Swift_Mailer
      */
     private $mailer;
-
     /**
      * @var \Twig_Environment
      */
     private $templating;
-
     /**
-     * @var  TokenGeneratorInterface
+     * @var TokenGeneratorInterface
      */
     private $generator;
 
@@ -34,9 +30,11 @@ class ResetPassword
     private $token;
 
     /**
-     * @param EntityManagerInterface $em
-     * @param \Swift_Mailer $mailer
-     * @param \Twig_Environment $templating
+     * ResetPassword constructor.
+     *
+     * @param EntityManagerInterface  $em
+     * @param \Swift_Mailer           $mailer
+     * @param \Twig_Environment       $templating
      * @param TokenGeneratorInterface $generator
      */
     public function __construct(
@@ -51,63 +49,60 @@ class ResetPassword
         $this->generator = $generator;
     }
 
-
     /**
      * @param $user
+     *
      * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
-     * @throws  \Twig_Error_Runtime
      */
-
-
     public function reset($user): void
     {
         $this->addToken($user);
         $this->sendResetPasswordEmail($user, $this->token);
-
     }
 
-    public function addToken($user)
+    /**
+     * Generate and add a temporary token to the target user.
+     *
+     * @param $user
+     */
+    private function addToken($user): void
     {
-        $this->token->$this->generateToken();
-        $user->setResetToken($this->token);
-        $user->setTokenExprationDate();
+        $this->token = $this->generateToken();
+        $user->setResetPasswordToken($this->token);
+        $user->setTokenExpirationDate();
         $this->em->flush();
     }
 
     /**
      * @param $user
+     *
+     * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
-     * @throws \Twig_Error_Loader
      */
-    private function sendResetPasswordEmail($user, $token)
+    private function sendResetPasswordEmail($user, $token): void
     {
-
-
-        $message = (new \Swift_Message('Request to reset password'))
-            ->setFrom("figen@iyimakina.com")
+        $message = (new \Swift_Message('Demande reinitialisation de mot de passe'))
+            ->setFrom('no-remply@symfony-blog.com')
             ->setTo($user->getEmail())
-            ->setBody($this->templating->render('security/password/email/password_reset_email',
-                [
+            ->setBody(
+                $this->templating->render('blog/security/password/email/_password_reset_email.html.twig', [
                     'username' => $user->getUsername(),
                     'token' => $token,
                 ]),
-        'text/html'
-    );
+                'text/html'
+            );
+
         $this->mailer->send($message);
-
-
     }
 
     /**
      * @return string
      */
-    private function generateToken():string
-
+    private function generateToken(): string
     {
         return $this->generator->generateToken();
-
     }
-
 }
