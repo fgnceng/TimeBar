@@ -61,6 +61,7 @@ class SecurityController extends Controller
         $this->redirectToRoute('app_homepage');
     }
 
+
     /**
      * @Route("/logout", name="logout")
      */
@@ -100,7 +101,7 @@ class SecurityController extends Controller
                 return $this->redirectToRoute('login');
             }
 
-            $form->addError(new FormError("L'email renseigné n'est lié à aucun compte"));
+            $form->addError(new FormError("The completed email is not linked to any account"));
         }
 
         return $this->render('blog/security/password/password_reset_request.html.twig', [

@@ -20,7 +20,13 @@ services:
             $markdownLogger: '@monolog.logger.markdown'
             $isDebug: '%kernel.debug%'
           #$emailSender: '%app.notifications.email_sender%'
-           
+
+
+    my.oauth_aware.user_provider.service:
+        class: HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider
+        arguments:
+            - '@fos_user.user_manager'
+            - ['pass properties as array']
 
     # custom aliases for autowiring
     Nexy\Slack\Client: '@nexy_slack.client'

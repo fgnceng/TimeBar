@@ -1,0 +1,8 @@
+hwi_oauth:
+    resource_owners:
+        any_name:
+            type:                resource_owner_of_choice
+            client_id:           <client_id>
+            client_secret:       <client_secret>
+            options:
+                csrf: true

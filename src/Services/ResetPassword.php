@@ -84,7 +84,7 @@ class ResetPassword
      */
     private function sendResetPasswordEmail($user, $token): void
     {
-        $message = (new \Swift_Message('Demande reinitialisation de mot de passe'))
+        $message = (new \Swift_Message('Request to reset password'))
             ->setFrom('no-remply@symfony-blog.com')
             ->setTo($user->getEmail())
             ->setBody(

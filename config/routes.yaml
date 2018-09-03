@@ -1,0 +1,5 @@
+facebook_login:
+  path: /secured/login_facebook
+
+google_login:
+  path: /secured/login_google
